@@ -1,4 +1,6 @@
-# dodolist
+# dodolist-react
+dodolist-react는 기존 dodolist를 작성하며 불편하였던 HTML DOM <-> JS간 sync를 위한 복잡도 향상문제를 해결하기위해 **FRONT END일부를 React로 구현**한 프로젝트입니다.
+
 dodolist는 **'나의 할 일'**을 관리할 수 있는 간단한 'todo 웹 어플리케이션 입니다'.
 
 위 프로젝트는 **프로그래머스에서 진행하는 '섬머코딩'의 2차 과제를 목적**으로 작성되었습니다.
@@ -8,7 +10,7 @@ dodolist는 **'나의 할 일'**을 관리할 수 있는 간단한 'todo 웹 어
 - FE : Jquery -> **React 변경**
 - 사용자별 todolist 관리 기능 추가
 
-### React실행을 위한 추가 작업
+### React실행을 위한 추가 작업(React 코드 수정 시 수행 필요)
 1. project 폴더로 이동
 2. Babel 설치
     - Step 1: Run npm init -y (if it fails, here’s a fix)
