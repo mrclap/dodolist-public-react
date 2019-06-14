@@ -1,5 +1,5 @@
 # dodolist-react
-dodolist-react는 기존 dodolist를 작성하며 불편하였던 HTML DOM <-> JS간 sync를 위한 복잡도 향상문제를 해결하기위해 **FRONT END일부를 React로 구현**한 프로젝트입니다.
+dodolist-react는 [기존 dodolist](http://dodolist.tk/)를 작성하며 불편하였던 HTML DOM <-> JS간 sync를 위한 복잡도 향상문제를 해결하기위해 **FRONT END일부를 React로 구현**한 프로젝트입니다.
 
 dodolist는 **'나의 할 일'**을 관리할 수 있는 간단한 'todo 웹 어플리케이션 입니다'.
 
