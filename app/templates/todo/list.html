@@ -1,0 +1,439 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load todo %}
+
+{% block headscript %}
+{# Tempus Dominus - datepicker #}
+  {# MOMENTS.JS #}
+  <script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+  {# END OF MOMENTS.JS #}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+{# END OF Tempus Dominus - datepicker #}
+{% endblock %}
+
+{% block content %}
+
+<main id='main-container' role="main" class="container">
+  <div class="d-flex flex-column align-items-stretch p-3 my-3 text-black-50 rounded shadow-sm">
+    <!-- <div id='todo-create-container' class="input-group flex-column"></div>
+    <div id='todo-done-container' class=""></div> -->
+  </div>
+</main>
+
+<script>
+  const orderId = {{order.id}};
+  const categoryId = {{category.id}};
+  // const CHECKED = 'check';
+  // const UNCHECKED = 'check_box_outline_blank';
+  // const userId = "{{ user.id }}"
+  // // todo create
+  // let createTodo = (rawData) => {
+  //   let data = {}
+
+  //   data['user'] = "{{ user.id }}"
+  //   data['category'] = "{{ category.id }}"
+  //   data['completed'] = 0
+
+  //   // title, detail, due_date
+  //   for (let key in rawData) {
+  //     if (rawData[key] !== null && rawData[key] !== '' ) {
+  //       data[key] = rawData[key]
+  //     }
+  //   }
+
+  //   // due_date check format check
+  //   let datetimeReg = new RegExp("[0-9]{4}-[0-9]{2}-[0-9]{2}.[0-9]{2}:[0-9]{2}");
+  //   if (!datetimeReg.exec(data['due_date'])) {
+  //     data['due_date'] = null
+  //   }
+
+  //   {#let priority # 추후 작업 #}
+
+  //   let headers = {
+  //             'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken' : getCSRFToken()
+  //   }
+
+  //   // JSON.stringify
+  //   data = JSON.stringify(data)
+  //   $.ajax({
+  //     headers: headers,
+  //     url: '/api/todos/',
+  //     type: 'POST',
+  //     data: data,
+  //     success: function (response) {
+  //       // 새로 추가한 todo를 가장 마지막 순서로 추가
+  //       updateOrder(response.id);
+
+  //       // todo) 더 좋은 방법 고민해보기
+  //       location.reload()
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       // log the error to the console
+  //       ("통신에 장애가 있습니다: " + textStatus, errorThrown);
+  //     },
+  //     complete: function () {
+  //     }
+  //   })
+  // }
+
+  // // todo 수정
+  // let updateTodo = (rawData) => {
+  //   let id = rawData['id']
+  //   let data = {}
+
+  //   // title, detail, due_date
+  //   for (let key in rawData) {
+  //     if (rawData[key] !== null && rawData[key] !== '' ) {
+  //       data[key] = rawData[key]
+  //     }
+  //   }
+
+  //   // due_date check format check
+  //   let datetimeReg = new RegExp("[0-9]{4}-[0-9]{2}-[0-9]{2}.[0-9]{2}:[0-9]{2}");
+  //   if (!datetimeReg.exec(data['due_date'])) {
+  //     data['due_date'] = null
+  //   }
+
+  //   let headers = {
+  //             'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken' : getCSRFToken()
+  //   }
+
+  //   // JSON.stringify
+  //   data = JSON.stringify(data)
+  //   $.ajax({
+  //     headers: headers,
+  //     url: '/api/todos/' + id + '/',
+  //     type: 'PATCH',
+  //     data: data,
+  //     success: function (response) {
+  //       location.reload()
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       // log the error to the console
+  //       console.log("통신에 장애가 있습니다: " + textStatus, errorThrown);
+  //     },
+  //     complete: function () {
+  //     }
+  //   })
+  // }
+
+  // // todo 완료/미완료 토글
+  // let deleteTodo = (id) => {
+
+  //   let headers = {
+  //             'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken' : getCSRFToken()
+  //   }
+
+  //   $.ajax({
+  //     headers: headers,
+  //     url: '/api/todos/' + id + '/',
+  //     type: 'DELETE',
+  //     success: function (response) {
+  //       location.reload()
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       // log the error to the console
+  //       console.log("통신에 장애가 있습니다: " + textStatus, errorThrown);
+  //     },
+  //     complete: function () {
+  //     }
+  //   })
+  // }
+
+  // // todo 완료/비완료 토글
+  // let updateTodoCompleteStatus = (id, rawData) => {
+  //   let completed = rawData['completed'] === CHECKED ? 1 : 0
+  //   let data = {
+  //     'completed': completed
+  //   }
+  //   let headers = {
+  //             'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken' : getCSRFToken()
+  //   }
+
+  //   // JSON.stringify
+  //   data = JSON.stringify(data)
+  //   $.ajax({
+  //     headers: headers,
+  //     url: '/api/todos/' + id + '/',
+  //     type: 'PATCH',
+  //     data: data,
+  //     success: function (response) {
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       // log the error to the console
+  //       console.log("통신에 장애가 있습니다: " + textStatus, errorThrown);
+  //     },
+  //     complete: function () {
+  //     }
+  //   })
+  // }
+
+  // // get todo detail
+  // let showTodoDetail = (id) => {
+
+  //   let headers = {
+  //             'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken' : getCSRFToken()
+  //   }
+  //   // JSON.stringify
+  //   $.ajax({
+  //     headers: headers,
+  //     url: '/api/todos/' + id + '/',
+  //     type: 'GET',
+  //     success: function (response) {
+  //       fillDetailInputField(response)
+  //     },
+  //     error: function (jqXHR, textStatus, errorThrown) {
+  //       // log the error to the console
+  //       alert("통신에 장애가 있습니다: " + textStatus, errorThrown);
+  //     },
+  //     complete: function () {
+  //     }
+  //   })
+  // }
+
+
+  // due date checker
+  // let dueDateChecker = () => {
+  //   let now = moment()
+  //   let dueDateSpan = $('span.due-date');
+  //   for (let idx=0; idx < dueDateSpan.length;idx++) {
+  //     let dueDate = dueDateSpan[idx].textContent
+  //     if (dueDate) {
+  //       let stdDueDate = datetimeFormatter(dueDate, 'YYYY-MM-DD HH:mm')
+  //       if( now.isAfter(stdDueDate) ) {
+  //         dueDateSpan[idx].className = 'due-date d-block text-danger'
+  //       }else{
+  //         dueDateSpan[idx].className = 'due-date d-block text-primary'
+  //       }
+  //     }
+  //   }
+  // }
+
+  $(function() {
+    // const sortable = new Draggable.Sortable(document.querySelectorAll('div#todo-container'), {
+    //   draggable: 'div.todo',
+    //   delay: 200
+    // });
+    // sortableEventContainer.event = sortable
+    // console.log(sortableEventContainer.event)
+
+    // sortable.on('sortable:start', () => {});
+    // sortable.on('sortable:sort', () => {});
+    // sortable.on('sortable:sorted', () => {});
+    // sortable.on('sortable:stop', (e) => {
+    //   // console.log(e.newIndex)
+    //   // console.log(e.oldIndex)
+    // });
+
+    // 마감기한 체크
+    // dueDateChecker()
+
+    // 마감기한 1분 단위 체크
+    // setInterval(dueDateChecker, 1000*60)
+
+    // todo 입력창에 초기포커
+    $('#input-title').focus()
+
+    // // todo checkbox click event assign
+    // $('.btn-checkbox').on("click", function(e) {
+    //   let wholeNode = e.target.parentNode.parentNode
+
+    //   if (wholeNode.className.includes('todo')) {
+    //     // todo 이면
+    //     // 1. classname todo -> done 바꾸고
+    //     wholeNode.className = 'done media text-muted pt-3'
+
+    //     // 1.1 checkbox 이미지 바꾸고
+    //     iconNode = e.target
+    //     iconNode.textContent = CHECKED
+
+    //     // 2. #done-container에 안에 마지막에 해당 div넣고
+    //     $('#done-container').append(wholeNode)
+
+    //     // 3. 해당 div의 hidden input의 id로 complete 1로 바꾸는 api 전송
+    //     let id = wholeNode.dataset.id
+    //     let rawData = {'completed':iconNode.textContent}
+
+    //     updateTodoCompleteStatus(id, rawData)
+
+    //   }else{
+    //     // done 이면
+    //     // 1. classname done -> todo 바꾸고
+    //      wholeNode.className = 'todo media text-muted pt-3'
+
+    //    // 1.1 checkbox 이미지 바꾸고
+    //     iconNode = e.target
+    //     iconNode.textContent = UNCHECKED
+
+    //     // 2. #todo-container에 안에 마지막에 해당 div넣고
+    //     $('#todo-container').append(wholeNode)
+
+    //     // 3. 해당 div의 hidden input의 id로 complete 0로 바꾸는 api 전송
+    //     let id = wholeNode.dataset.id
+    //     let rawData = {'completed':iconNode.textContent}
+
+    //     updateTodoCompleteStatus(id, rawData)
+    //   }
+    //   // todo order update
+    //   updateOrder()
+    // })
+
+
+    // todo create button click event assign
+    // $('#btn-create-todo').on("click", function (e) {
+    //   let className = '.todo-create'
+    //   let rawData = inputFieldToRawData(className)
+    //   createTodo(rawData)
+    // })
+
+    // todo update button click event assign
+    // $('#btn-update-todo').on("click", function (e) {
+    //   let className = '.todo-update'
+    //   let rawData = inputFieldToRawData(className)
+    //   updateTodo(rawData)
+    // })
+
+    // todo delete button click event assign
+    // $('#btn-delete-todo').on("click", function (e) {
+    //   let className = '.todo-update'
+    //   let rawData = inputFieldToRawData(className)
+    //   deleteTodo(rawData.id)
+    // })
+
+    // todo title field enter
+    // $('#input-title').on('keypress', function (e) {
+    //   const ENTER = 13
+    //   if (e.which == ENTER) {
+    //     let className = '.todo-create'
+    //     let rawData = inputFieldToRawData(className)
+    //     createTodo(rawData)
+    //   }
+    // })
+
+    // enter todo detail
+    //$('#modal-todo-detail').modal({keyboard:'false'})
+    // $('p.todo-detail').on("click", function(e) {
+    //   let todoNode
+    //   if (e.target.tagName === 'P') {
+    //     todoNode = e.target.parentNode
+    //   }else {
+    //     todoNode = e.target.parentNode.parentNode
+    //   }
+    //   showTodoDetail(todoNode.dataset.id)
+    //   $('#modal-todo-detail').modal('show')
+    // })
+
+
+    // // Tempus Dominus - datepicker
+    // $('#datetimepicker-create').datetimepicker({'format': 'YYMMDD HHmm'});
+    // $('#datetimepicker-update').datetimepicker({'format': 'YYMMDD HHmm'});
+
+
+
+    // autosize for textarea
+    $("textarea.autosize").on('keypress', function (e) {
+      const ENTER = 13
+      if(e.which == ENTER) {
+        let numOfRows = $(this).attr('rows')
+        $(this).attr('rows', parseInt(numOfRows)+1)
+      }
+    });
+  })
+
+
+  // util functions
+  // let getCSRFToken = () => {
+  //   return Cookies.get('csrftoken');
+  // }
+
+
+  // let inputFieldToRawData = (className) => {
+  //   let rawData = {}
+  //   let inputNodeList = $(className).get()
+  //   for (let idx in inputNodeList) {
+  //     let name = inputNodeList[idx].name
+  //     let value
+  //     if (name === 'due-date') {
+  //       name = 'due_date'
+  //       value = datetimeFormatter(inputNodeList[idx].value, format='YYMMDD HHmm')
+  //     }else if (name === 'detail') {
+  //       value = inputNodeList[idx].value
+  //     }else{
+  //       value = inputNodeList[idx].value
+  //     }
+  //     rawData[name] = value
+  //   }
+  //   return rawData
+  // }
+
+
+  // 모달에서 todo detail 정보 뿌려줌
+  // let fillDetailInputField = (data) => {
+  //   let inputNodeList = $('.todo-update').get()
+  //   for (let idx in inputNodeList) {
+  //     let name = inputNodeList[idx].name
+  //     let value
+
+  //     if (name === 'due-date') {
+  //       if ( data.due_date !== '' && data.due_date !== null) {
+  //         inputNodeList[idx].value = moment(data.due_date).format('YYMMDD HHmm')
+  //       }else {
+  //         inputNodeList[idx].value = null
+  //       }
+  //     }else if (name === 'detail') {
+  //       inputNodeList[idx].value = data.detail
+  //     }else if (name === 'title') {
+  //       inputNodeList[idx].value = data.title
+  //     }else if (name === 'id') {
+  //       inputNodeList[idx].value = data.id
+  //     }
+  //   }
+  // }
+
+  // let makeOrderArr = (todoNodeList) => {
+  //   let orderArr = []
+  //   for (let idx in todoNodeList) {
+  //     if(todoNodeList[idx].tagName === 'DIV') {
+  //       if(todoNodeList[idx].className === 'todo media text-muted pt-3'
+  //           || todoNodeList[idx].className === 'todo media text-muted pt-3 draggable-source--is-dragging draggable--over' ){
+  //         orderArr.push(parseInt(todoNodeList[idx].dataset.id))
+  //       }
+  //     }else {
+  //       break;
+  //     }
+  //   }
+  //   return orderArr
+  // }
+
+// // date time formatter
+// let datetimeFormatter = (datetime, format='YYMMDD HHmm') => {
+//     const stdFormatTime = moment(datetime, format).format('YYYY-MM-DDThh:mm')
+//     return stdFormatTime
+// }
+
+</script>
+
+<!-- for REACT -->
+  <!-- loading REACT-->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <!-- loading Components-->
+  <script src="{% static 'react/todo/TodoComponent.js' %}"></script>
+  <script src="{% static 'react/todo/TodoList.js' %}"></script>
+  <script src="{% static 'react/todo/TodoCreate.js' %}"></script>
+  <!-- <script src="{% static 'react/todo/TodoDetail.js' %}"></script> -->
+  <script src="{% static 'react/todo/TodoSPA.js' %}"></script>
+<!-- end of for REACT-->
+
+{% endblock %}

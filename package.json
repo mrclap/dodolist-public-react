@@ -1,0 +1,29 @@
+{
+  "name": "dodolist",
+  "version": "1.0.0",
+  "description": "dodolist는 **'나의 할 일'**을 관리할 수 있는 간단한 'todo 웹 어플리케이션 입니다'.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrclap/dodolist.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrclap/dodolist/issues"
+  },
+  "homepage": "https://github.com/mrclap/dodolist#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "webpack": "^4.32.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5"
+  }
+}
